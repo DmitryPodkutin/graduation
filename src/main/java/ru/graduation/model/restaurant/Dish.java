@@ -1,8 +1,10 @@
 package ru.graduation.model.restaurant;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import ru.graduation.model.AbstractNamedEntity;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -19,6 +21,7 @@ import java.time.LocalDate;
 public class Dish extends AbstractNamedEntity {
    
     @Column(name = "date", nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     private LocalDate date;
 
@@ -26,11 +29,11 @@ public class Dish extends AbstractNamedEntity {
     @Range(min = 1, max = 10000)
     private long price;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
-    @NotNull
     private Restaurant restaurant;
 
     public Dish() {

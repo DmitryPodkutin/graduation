@@ -1,5 +1,6 @@
 package ru.graduation.model.restaurant;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import ru.graduation.model.AbstractBaseEntity;
@@ -19,30 +20,30 @@ public class Vote extends AbstractBaseEntity {
 
     @Column(name = "date", nullable = false)
     @NotNull
-    LocalDate date;
+    private final LocalDate date = LocalDate.now();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
-    User user;
+    private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
-    Restaurant restaurant;
+    private Restaurant restaurant;
 
     public Vote() {
     }
 
-    public Vote(LocalDate date, User user, Restaurant restaurant) {
-        this(null, date, user, restaurant);
+    public Vote(@NotNull User user, @NotNull Restaurant restaurant) {
+        this.user = user;
+        this.restaurant = restaurant;
     }
 
-    public Vote(Integer id, LocalDate date, User user, Restaurant restaurant) {
+    public Vote(Integer id, @NotNull User user, @NotNull Restaurant restaurant) {
         super(id);
-        this.date = date;
         this.user = user;
         this.restaurant = restaurant;
     }
@@ -50,10 +51,9 @@ public class Vote extends AbstractBaseEntity {
     @Override
     public String toString() {
         return "Vote{" +
-                ", id=" + id +
-                ", date=" + date +
-                ", user=" + user +
-                ", restaurant=" + restaurant +
+                "date=" + date +
+                ", userId=" + user.getId() +
+                ", restaurantId=" + restaurant.getId() +
                 '}';
     }
 }
