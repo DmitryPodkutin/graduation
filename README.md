@@ -92,6 +92,7 @@ curl -s -X POST http://localhost:8080/graduation/profile/restaurants/100003/vote
 ```sh
 curl -s -X PUT http://localhost:8080/graduation/profile/restaurants/100004/votes/100019  --user user@yandex.ru:password
 ```
+
 ### - **admin** -
 
 **get All Restaurants** (RequestParam - withMenu=false/true , default withMenu=true)
