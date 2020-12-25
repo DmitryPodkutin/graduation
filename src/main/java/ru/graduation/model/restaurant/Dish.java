@@ -22,11 +22,11 @@ public class Dish extends AbstractNamedEntity {
    
     @Column(name = "date", nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull
+    @NotNull(message = "The date field cannot be empty")
     private LocalDate date;
 
     @Column(name = "price", nullable = false)
-    @Range(min = 1, max = 10000)
+    @Range(min = 1, max = 10000, message = "The price should be in the range from 1 to 10000")
     private long price;
 
     @JsonIgnore

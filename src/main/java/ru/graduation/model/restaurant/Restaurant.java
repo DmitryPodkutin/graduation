@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "restaurant")
 public class Restaurant extends AbstractNamedEntity {
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
+    @OneToMany(fetch = FetchType.LAZY ,mappedBy = "restaurant")
     private List<Dish> menu;
 
     public Restaurant() {

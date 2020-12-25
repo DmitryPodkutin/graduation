@@ -1,6 +1,9 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8349247a1800468ab3a50526f5b31ecb)](https://app.codacy.com/gh/DmitryPodkutin/graduation?utm_source=github.com&utm_medium=referral&utm_content=DmitryPodkutin/graduation&utm_campaign=Badge_Grade)
+
 # Voting system for deciding where to have lunch.
 
-**REST API using Hibernate/Spring/SpringMVC (or Spring-Boot)**
+**REST API using Maven/Hibernate/Spring/SpringMVC/Security?REST(Jackson), Java 8 Stream and Time API<br>
+Storage in databases HSQLDB.**
 
 ### Description
 
@@ -18,7 +21,9 @@ curl samples (application deployed at application context graduation).
 For windows use Git Bash
 
 
-### - **user** -
+<br/>
+<b><h3><ins>- user -</ins></h3></b>
+<br>
 
 
 **get All Restaurants** (RequestParam - withMenu=false/true , default withMenu=true)
@@ -26,8 +31,10 @@ For windows use Git Bash
 ```sh
 curl -s http://localhost:8080/graduation/profile/restaurants/?withMenu=false --user user@yandex.ru:password
 ```
-```json
-RESULT
+<b>
+<details>
+<summary><b>RESULT</b></summary>
+<pre>
 
 [
     {
@@ -43,16 +50,20 @@ RESULT
         "name": "The Lounge Cafe"
     }
 ]
-```
+</pre>
+</details>
+</b>
+<br>
 
 **get Restaurant** (RequestParam - withMenu=false/true , default withMenu=true)
 
 ```sh
 curl -s http://localhost:8080/graduation/profile/restaurants/100002?\withMenu\=false  --user user@yandex.ru:password
 ```
-
-```json
-RESULT
+<b>
+<details>
+<summary><b>RESULT</b></summary>
+<pre>
 
 {
         "id": 100002,
@@ -78,7 +89,10 @@ RESULT
         ],
         "name": "Debasus"
     }
-```
+</pre>
+</details>
+</b>
+<br>
 
 **get Vote** (vote to the current date)
 ```sh
@@ -92,8 +106,9 @@ curl -s -X POST http://localhost:8080/graduation/profile/restaurants/100003/vote
 ```sh
 curl -s -X PUT http://localhost:8080/graduation/profile/restaurants/100004/votes/100019  --user user@yandex.ru:password
 ```
-
-### - **admin** -
+<br/>
+<b><h3><ins>- admin -</ins></h3></b>
+<br>
 
 **get All Restaurants** (RequestParam - withMenu=false/true , default withMenu=true)
 ```sh
@@ -117,3 +132,43 @@ curl -s http://localhost:8080/graduation/admin/restaurants/100003/dishes --user 
 ```sh
 curl -s -i -X DELETE http://localhost:8080/graduation/admin/restaurants/100003/dishes/100010  --user admin@gmail.com:admin
 ```
+
+**Get a history of restaurant Votes**
+
+```sh
+curl -s  http://localhost:8080/graduation/admin/restaurants/100004/votes --user admin@gmail.com:admin
+```
+
+<b>
+<details>
+<summary><b>RESULT</b></summary>
+<pre>
+
+{
+      "date": "2020-10-19",
+      "id": 100015,
+      "restaurant": {
+          "id": 100004,
+          "name": "The Lounge Cafe"
+      }
+  },
+  {
+      "date": "2020-10-23",
+      "id": 100014,
+      "restaurant": {
+          "id": 100004,
+          "name": "The Lounge Cafe"
+      }
+  },
+  {
+      "date": "2020-11-09",
+      "id": 100017,
+      "restaurant": {
+          "id": 100004,
+          "name": "The Lounge Cafe"
+      }
+  }
+</pre>
+</details>
+</b>
+<br>
