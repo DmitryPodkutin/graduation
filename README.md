@@ -1,5 +1,7 @@
 # Voting system for deciding where to have lunch.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8349247a1800468ab3a50526f5b31ecb)](https://app.codacy.com/gh/DmitryPodkutin/graduation?utm_source=github.com&utm_medium=referral&utm_content=DmitryPodkutin/graduation&utm_campaign=Badge_Grade)
+
 **REST API using Hibernate/Spring/SpringMVC (or Spring-Boot)**
 
 ### Description
