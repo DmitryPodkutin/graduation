@@ -16,7 +16,7 @@ import java.util.List;
 @Table(name = "restaurant")
 public class Restaurant extends AbstractNamedEntity {
 
-    @OneToMany(fetch = FetchType.LAZY ,mappedBy = "restaurant")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     private List<Dish> menu;
 
     public Restaurant() {
@@ -33,15 +33,6 @@ public class Restaurant extends AbstractNamedEntity {
     public Restaurant(Integer id, String name, List<Dish> menu) {
         super(id, name);
         this.menu = menu;
-    }
-
-    @Override
-    public String toString() {
-        return "Restaurant{" +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                ", menu=" + menu +
-                '}';
     }
 }
 

@@ -20,30 +20,37 @@ public class Vote extends AbstractBaseEntity {
 
     @Column(name = "date", nullable = false)
     @NotNull
-    private LocalDate date =LocalDate.now();
+    private LocalDate date;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private Restaurant restaurant;
 
     public Vote() {
     }
 
     public Vote(@NotNull User user, @NotNull Restaurant restaurant) {
-      this(null,user,restaurant);
+        this(null, user, restaurant,LocalDate.now());
     }
 
-    public Vote(Integer id,@NotNull User user, @NotNull Restaurant restaurant) {
+    public Vote(Integer id, @NotNull User user, @NotNull Restaurant restaurant) {
+        this(id, user, restaurant, LocalDate.now());
+    }
+
+    public Vote(Integer id, @NotNull User user, @NotNull Restaurant restaurant, LocalDate date) {
         super(id);
         this.user = user;
         this.restaurant = restaurant;
+        this.date = date;
     }
 
     @Override

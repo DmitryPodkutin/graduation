@@ -1,10 +1,8 @@
 package ru.graduation.model.restaurant;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 import ru.graduation.model.AbstractNamedEntity;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -19,9 +17,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "dish")
 public class Dish extends AbstractNamedEntity {
-   
+
     @Column(name = "date", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "The date field cannot be empty")
     private LocalDate date;
 
@@ -33,7 +30,6 @@ public class Dish extends AbstractNamedEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonBackReference
     private Restaurant restaurant;
 
     public Dish() {
@@ -54,15 +50,5 @@ public class Dish extends AbstractNamedEntity {
         this.date = date;
         this.price = price;
         this.restaurant = restaurant;
-    }
-
-    @Override
-    public String toString() {
-        return "Dish{" +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                "date=" + date +
-                ", price=" + price +
-                '}';
     }
 }
