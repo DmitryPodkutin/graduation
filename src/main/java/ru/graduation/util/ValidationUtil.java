@@ -7,7 +7,7 @@ import ru.graduation.util.exception.VotingException;
 import java.time.LocalTime;
 public class ValidationUtil {
 
-    public static final LocalTime DEADLINE_TIME = LocalTime.of(23, 0);
+    public static final LocalTime DEADLINE_TIME = LocalTime.of(11, 0);
 
     private ValidationUtil() {
     }
