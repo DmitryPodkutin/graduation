@@ -91,7 +91,7 @@
                             <artifactId>voting_system</artifactId>
                             <type>war</type>
                             <properties>
-                                <context>graduation</context>
+                                <context>voting-system</context>
                             </properties>
                         </deployable>
                     </deployables>

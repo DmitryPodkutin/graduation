@@ -17,7 +17,7 @@ Storage in databases HSQLDB.**
     - If it is after 11:00 then it is too late, vote can't be changed
 ------
 ##  Commands for Using application
-curl samples (application deployed at application context graduation).
+curl samples (application deployed at application context voting-system).
 For windows use Git Bash
 
 
@@ -29,7 +29,7 @@ For windows use Git Bash
 **get All Restaurants** (RequestParam - withMenu=false/true , default withMenu=true)
 
 ```sh
-curl -s http://localhost:8080/graduation/profile/restaurants/?withMenu=false --user user@yandex.ru:password
+curl -s http://localhost:8080/voting-system/profile/restaurants/?withMenu=false --user user@yandex.ru:password
 ```
 <b>
 <details>
@@ -58,7 +58,7 @@ curl -s http://localhost:8080/graduation/profile/restaurants/?withMenu=false --u
 **get Restaurant** (RequestParam - withMenu=false/true , default withMenu=true)
 
 ```sh
-curl -s http://localhost:8080/graduation/profile/restaurants/100002?\withMenu\=false  --user user@yandex.ru:password
+curl -s http://localhost:8080/voting-system/profile/restaurants/100002?\withMenu\=false  --user user@yandex.ru:password
 ```
 <b>
 <details>
@@ -96,15 +96,15 @@ curl -s http://localhost:8080/graduation/profile/restaurants/100002?\withMenu\=f
 
 **get Vote** (vote to the current date)
 ```sh
-curl -s http://localhost:8080/graduation/profile/votes  --user user@yandex.ru:password
+curl -s http://localhost:8080/voting-system/profile/votes  --user user@yandex.ru:password
 ```
 **create Vote**  
 ```sh
-curl -s -X POST http://localhost:8080/graduation/profile/restaurants/100003/votes  --user user@yandex.ru:password
+curl -s -X POST http://localhost:8080/voting-system/profile/restaurants/100003/votes  --user user@yandex.ru:password
 ```
 **update Vote** (you can only change your voice until 11:00AM)
 ```sh
-curl -s -X PUT http://localhost:8080/graduation/profile/restaurants/100004/votes/100019  --user user@yandex.ru:password
+curl -s -X PUT http://localhost:8080/voting-system/profile/restaurants/100004/votes/100019  --user user@yandex.ru:password
 ```
 <br/>
 <b><h3><ins>- admin -</ins></h3></b>
@@ -112,31 +112,31 @@ curl -s -X PUT http://localhost:8080/graduation/profile/restaurants/100004/votes
 
 **get All Restaurants** (RequestParam - withMenu=false/true , default withMenu=true)
 ```sh
-curl -s http://localhost:8080/graduation/profile/restaurants  --user admin@gmail.com:admin
+curl -s http://localhost:8080/voting-system/profile/restaurants  --user admin@gmail.com:admin
 ```
 **create Restaurant**
 ```sh
-curl -s -X POST -d '{"name":"NewRestaurant"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/graduation/admin/restaurants --user admin@gmail.com:admin
+curl -s -X POST -d '{"name":"NewRestaurant"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting-system/admin/restaurants --user admin@gmail.com:admin
 ```
 
 **create new Dish**
 ```sh
-curl -s -X POST -d '{"date":"2020-12-21","name":"BigMac ","price":777}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/graduation/admin/restaurants/100003/dishes --user admin@gmail.com:admin
+curl -s -X POST -d '{"date":"2020-12-21","name":"BigMac ","price":777}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/voting-system/admin/restaurants/100003/dishes --user admin@gmail.com:admin
 ```
 
 **get All Dishes For Restaurant** (order by date)
 ```sh
-curl -s http://localhost:8080/graduation/admin/restaurants/100003/dishes --user admin@gmail.com:admin
+curl -s http://localhost:8080/voting-system/admin/restaurants/100003/dishes --user admin@gmail.com:admin
 ```
 **delete Dish**
 ```sh
-curl -s -i -X DELETE http://localhost:8080/graduation/admin/restaurants/100003/dishes/100010  --user admin@gmail.com:admin
+curl -s -i -X DELETE http://localhost:8080/voting-system/admin/restaurants/100003/dishes/100010  --user admin@gmail.com:admin
 ```
 
 **Get a history of restaurant Votes**
 
 ```sh
-curl -s  http://localhost:8080/graduation/admin/restaurants/100004/votes --user admin@gmail.com:admin
+curl -s  http://localhost:8080/voting-system/admin/restaurants/100004/votes --user admin@gmail.com:admin
 ```
 
 <b>
