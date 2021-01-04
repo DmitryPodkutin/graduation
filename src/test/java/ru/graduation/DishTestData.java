@@ -11,7 +11,6 @@ public class DishTestData {
     public static final Integer DISH_ID = START_SEQ + 9;
     public static final Integer DISH_ID_NOT_FOUND = 9;
 
-
     public static Dish getNewDish() {
         return new Dish("NewDish", LocalDate.of(2020,12,11), 777);
     }

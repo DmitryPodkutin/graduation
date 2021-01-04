@@ -23,8 +23,6 @@
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.30</slf4j.version>
 
-        <!--DB-->
-        <postgresql.version>42.2.17</postgresql.version>
         <!--    Tests  -->
         <junit.jupiter.version>5.7.0</junit.jupiter.version>
         <assertj.version>3.17.2</assertj.version>
@@ -59,6 +57,44 @@
                 <version>2.22.2</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven2-plugin</artifactId>
+                <version>1.8.2</version>
+                <configuration>
+                    <container>
+                        <containerId>tomcat9x</containerId>
+                        <systemProperties>
+                            <file.encoding>UTF-8</file.encoding>
+                        </systemProperties>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.hsqldb</groupId>
+                                <artifactId>hsqldb</artifactId>
+                            </dependency>
+                        </dependencies>
+                    </container>
+                    <configuration>
+                        <configfiles>
+                            <configfile>
+                                <file>src/main/resources/tomcat/context.xml</file>
+                                <todir>conf/Catalina/localhost/</todir>
+                                <tofile>${project.build.finalName}.xml</tofile>
+                            </configfile>
+                        </configfiles>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>restaurant</groupId>
+                            <artifactId>restaurants_rating</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>graduation</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
                 </configuration>
             </plugin>
         </plugins>
@@ -126,11 +162,6 @@
         </dependency>
 
         <!--DataBase-->
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
@@ -239,10 +270,4 @@
             <version>${jackson-json.version}</version>
         </dependency>
     </dependencies>
-
-    <profiles>
-    </profiles>
-
-    <dependencyManagement>
-    </dependencyManagement>
 </project>
