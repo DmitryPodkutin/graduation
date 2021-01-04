@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>restaurant</groupId>
-    <artifactId>restaurants_rating</artifactId>
+    <artifactId>voting_system</artifactId>
     <packaging>war</packaging>
 
     <version>1.0-SNAPSHOT</version>
@@ -39,7 +39,7 @@
     </properties>
 
     <build>
-        <finalName>restaurants_rating</finalName>
+        <finalName>voting_system</finalName>
         <defaultGoal>package</defaultGoal>
         <plugins>
             <plugin>
@@ -88,7 +88,7 @@
                     <deployables>
                         <deployable>
                             <groupId>restaurant</groupId>
-                            <artifactId>restaurants_rating</artifactId>
+                            <artifactId>voting_system</artifactId>
                             <type>war</type>
                             <properties>
                                 <context>graduation</context>
