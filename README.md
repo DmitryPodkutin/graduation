@@ -1,5 +1,4 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8349247a1800468ab3a50526f5b31ecb)](https://app.codacy.com/gh/DmitryPodkutin/graduation?utm_source=github.com&utm_medium=referral&utm_content=DmitryPodkutin/graduation&utm_campaign=Badge_Grade)
-
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/a4b79bfd96ce4a0e96b145af99eaf95b)](https://www.codacy.com/gh/DmitryPodkutin/voting_system/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DmitryPodkutin/voting_system&amp;utm_campaign=Badge_Grade)
 # Voting system for deciding where to have lunch.
 
 **REST API using Maven/Hibernate/Spring/SpringMVC/Security?REST(Jackson), Java 8 Stream and Time API<br>
