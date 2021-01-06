@@ -3,6 +3,8 @@ package com.gmail.podkutin.dmitry.voting_system.model.restaurant;
 import com.gmail.podkutin.dmitry.voting_system.model.AbstractNamedEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +16,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "restaurant")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Restaurant extends AbstractNamedEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
