@@ -22,6 +22,7 @@ public class ExceptionInfoHandler {
     private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
     public static final String EXCEPTION_DUPLICATE_VOTE = "You already voted today";
     public static final String EXCEPTION_DUPLICATE_RESTAURANT = "A restaurant with this name already exists";
+    public static final String EXCEPTION_DUPLICATE_DISH = "A dish with this name for this restaurant already exists in this date";
 
     //  http://stackoverflow.com/a/22358422/548473
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
@@ -41,7 +42,8 @@ public class ExceptionInfoHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
         Map<String, String> map = Map.of("VOTE_USER_ID_DATE_U_INDEX",EXCEPTION_DUPLICATE_VOTE,
-                "RESTAURANT_UNIQUE_NAME_INDEX", EXCEPTION_DUPLICATE_RESTAURANT);
+                "RESTAURANT_UNIQUE_NAME_INDEX", EXCEPTION_DUPLICATE_RESTAURANT,
+                "DISH_UNIQUE_RESTAURANT_ID_DATE_NAME_IDX",EXCEPTION_DUPLICATE_DISH);
         for (String key : map.keySet()) {
             if (Objects.requireNonNull(e.getRootCause()).getLocalizedMessage().contains(key)) {
                 return logAndGetErrorInfo(req, new VotingException(map.get(key)), false, ErrorType.VALIDATION_ERROR);
