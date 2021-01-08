@@ -36,10 +36,7 @@ public class RestaurantTestData {
     }
 
     public static List<Restaurant> getRestaurantsWithoutMenu() {
-        RESTAURANT_2.setMenu(null);
-        RESTAURANT_1.setMenu(null);
-        RESTAURANT_3.setMenu(null);
-        return List.of(RESTAURANT_2, RESTAURANT_1, RESTAURANT_3);
+        return List.of(new Restaurant(100003, "Colonies"), new Restaurant(100002, "Debasus"), new Restaurant(100004, "The Lounge Cafe"));
     }
 }
 

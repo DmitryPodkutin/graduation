@@ -87,7 +87,6 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
         Vote taken = service.get(VOTE_3.id());
         if (taken.getRestaurant().id() == (RESTAURANT_3.id())) {
             taken.setRestaurant(RESTAURANT_3);
-//            }
             VOTE_MATCHER.assertMatch(taken, updated);
         }
     }
