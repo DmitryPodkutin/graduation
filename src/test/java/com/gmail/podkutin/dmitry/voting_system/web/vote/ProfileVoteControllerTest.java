@@ -1,6 +1,6 @@
 package com.gmail.podkutin.dmitry.voting_system.web.vote;
 
-import com.gmail.podkutin.dmitry.voting_system.web.AbstractControllerTest;
+import com.gmail.podkutin.dmitry.voting_system.AbstractControllerTest;
 import org.junit.Assume;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,6 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
         VOTE_MATCHER.assertMatch(created, newVote);
 
         TestUtil.mockAuthorize(UserTestData.user);
-        TestUtil.userAuth(UserTestData.user);
         Vote taken = service.get(id);
         if (taken.getRestaurant().id() == (RESTAURANT_2.id())) {
             taken.setRestaurant(RESTAURANT_2);
@@ -77,7 +76,7 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        Assume.assumeTrue("Try this test up to 11:00AM",LocalTime.now().isBefore(DEADLINE_TIME));
+        Assume.assumeTrue("Try this test up to 11:00AM", LocalTime.now().isBefore(DEADLINE_TIME));
         Vote updated = getUpdatedVote();
         perform(MockMvcRequestBuilders.put(VOTE3_REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(UserTestData.user))
@@ -95,7 +94,7 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
 
     @Test
     public void updateAfterDeadLineTime() throws Exception {
-        Assume.assumeTrue("Try this test after 11:00AM",LocalTime.now().isAfter(DEADLINE_TIME));
+        Assume.assumeTrue("Try this test after 11:00AM", LocalTime.now().isAfter(DEADLINE_TIME));
         Vote updated = getUpdatedVote();
         perform(MockMvcRequestBuilders.put(VOTE3_REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(UserTestData.user))

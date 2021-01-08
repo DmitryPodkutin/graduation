@@ -1,4 +1,4 @@
-package com.gmail.podkutin.dmitry.voting_system.web;
+package com.gmail.podkutin.dmitry.voting_system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;

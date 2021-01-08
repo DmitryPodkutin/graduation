@@ -1,6 +1,6 @@
 package com.gmail.podkutin.dmitry.voting_system.web.restaurant;
 
-import com.gmail.podkutin.dmitry.voting_system.web.AbstractControllerTest;
+import com.gmail.podkutin.dmitry.voting_system.AbstractControllerTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,7 +21,7 @@ public class ProfileRestaurantControllerTest extends AbstractControllerTest {
     ProfileRestaurantController restController;
 
     @Test
-    public void get() throws Exception {
+    public void getWithMenuDay() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID)
                 .with(userHttpBasic(UserTestData.user)))
                 .andExpect(status().isOk())
@@ -30,6 +30,18 @@ public class ProfileRestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(RESTAURANT_2_ORDERED));
     }
+
+    @Test
+    public void getWithoutMenuDay() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID).param("withMenu", "false")
+                .with(userHttpBasic(UserTestData.user)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                // https://jira.spring.io/browse/SPR-14472
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(RESTAURANT_MATCHER.contentJson(RESTAURANT_2_WITHOUT_MENU));
+    }
+
     @Test
     public void getNotFound() throws Exception {
         perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID_NOT_FOUND)
@@ -43,6 +55,15 @@ public class ProfileRestaurantControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(UserTestData.user)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESTAURANT_MATCHER.contentJson(getWithMenu()));
+                .andExpect(RESTAURANT_MATCHER.contentJson(getRestaurants()));
+    }
+
+    @Test
+    void getAllWithoutMenuDay() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL).param("withMenu", "false")
+                .with(userHttpBasic(UserTestData.user)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(RESTAURANT_MATCHER.contentJson(getRestaurantsWithoutMenu()));
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class RestaurantTestData {
     public static final TestMatcher<Restaurant> RESTAURANT_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Restaurant.class);
+    public static final TestMatcher<Restaurant> RESTAURANT_MATCHER_WITHOUT_MENU = TestMatcher.usingIgnoringFieldsComparator(Restaurant.class, "menu");
     public static final Integer RESTAURANT_ID = AbstractBaseEntity.START_SEQ + 3;
     public static final Integer RESTAURANT_ID_NOT_FOUND = 5;
 
@@ -20,16 +21,25 @@ public class RestaurantTestData {
             List.of(new Dish(100011, "Fresh juice", LocalDate.now(), 160), new Dish(100012, "Tomato soup", LocalDate.now(), 920), new Dish(100013, "Pasta Carbonara", LocalDate.now(), 270)));
     public static final Restaurant RESTAURANT_2_ORDERED = new Restaurant(100003, "Colonies",
             List.of(new Dish(100010, "Bacon and eggs", LocalDate.now(), 70), new Dish(100009, "Pizza", LocalDate.now(), 500), new Dish(100008, "Tea", LocalDate.now(), 60)));
+    public static final Restaurant RESTAURANT_2_WITHOUT_MENU = new Restaurant(100003, "Colonies");
 
     public static Restaurant getUpdatedRestaurant() {
-        return new Restaurant(RESTAURANT_2.id(), "UpdatedName");
+        return new Restaurant(RESTAURANT_ID, "UpdatedName");
     }
 
     public static Restaurant getNewRestaurant() {
         return new Restaurant("NewRestaurant");
     }
 
-    public static List<Restaurant> getWithMenu() {
+    public static List<Restaurant> getRestaurants() {
+        return List.of(RESTAURANT_2, RESTAURANT_1, RESTAURANT_3);
+    }
+
+    public static List<Restaurant> getRestaurantsWithoutMenu() {
+        RESTAURANT_2.setMenu(null);
+        RESTAURANT_1.setMenu(null);
+        RESTAURANT_3.setMenu(null);
         return List.of(RESTAURANT_2, RESTAURANT_1, RESTAURANT_3);
     }
 }
+

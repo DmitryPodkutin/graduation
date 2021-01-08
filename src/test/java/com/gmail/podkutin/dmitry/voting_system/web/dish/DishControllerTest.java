@@ -1,6 +1,6 @@
 package com.gmail.podkutin.dmitry.voting_system.web.dish;
 
-import com.gmail.podkutin.dmitry.voting_system.web.AbstractControllerTest;
+import com.gmail.podkutin.dmitry.voting_system.AbstractControllerTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
