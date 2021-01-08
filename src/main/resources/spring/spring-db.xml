@@ -4,10 +4,12 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:cache="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd"
+>
 
     <context:component-scan base-package="com.gmail.podkutin.dmitry.voting_system.repository"/>
     <jpa:repositories base-package="com.gmail.podkutin.dmitry.voting_system.repository"/>
@@ -49,7 +51,16 @@
             </bean>
         </property>
     </bean>
-    <!-- -->
+
+    <bean id="cacheManager"
+          class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <bean class="org.springframework.cache.concurrent.ConcurrentMapCache">
+                <constructor-arg value="queryCacheServices"/>
+            </bean>
+        </property>
+    </bean>
+    <cache:annotation-driven />
 
     <!-- Transaction manager for a single JPA EntityManagerFactory (alternative to JTA) -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
