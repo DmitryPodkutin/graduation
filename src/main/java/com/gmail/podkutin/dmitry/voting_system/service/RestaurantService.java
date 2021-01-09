@@ -23,13 +23,19 @@ public class RestaurantService {
         this.repository = repository;
     }
 
-    public List<Restaurant> getAll() {
+    public List<Restaurant> getAll(Boolean withMenu) {
         log.info("getAll");
+        if (withMenu) {
+            return repository.getAllWithMenuDay(LocalDate.now());
+        }
         return repository.getAll();
     }
 
-    public Restaurant get(int id) {
+    public Restaurant get(int id, boolean withMenu) {
         log.info("get {}", id);
+        if (withMenu) {
+            repository.getWithMenuDay(id, LocalDate.now()).orElseThrow(() -> new NotFoundException(" Not found entity with " + id));
+        }
         return repository.findById(id).orElseThrow(() -> new NotFoundException(" Not found entity with " + id));
     }
 
@@ -40,22 +46,15 @@ public class RestaurantService {
     }
 
     public void update(Restaurant restaurant, int id) {
-        log.info("update {} with id={}", restaurant, id);
         assureIdConsistent(restaurant, id);
         Assert.notNull(restaurant, "restaurant must not be null");
+        get(id, false);
+        log.info("update {} with id={}", restaurant, id);
         repository.save(restaurant);
     }
 
     public void delete(int id) {
         log.info("delete {}", id);
         checkNotFoundWithId(repository.delete(id), id);
-    }
-
-    public List<Restaurant> getAllWithMenuDay(LocalDate date) {
-        return repository.getAllWithMenuDay(date);
-    }
-
-    public Restaurant getWithMenuDay(int id, LocalDate date) {
-        return repository.getWithMenuDay(id,date).orElseThrow(() -> new NotFoundException(" Not found entity with " + id));
     }
 }

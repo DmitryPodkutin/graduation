@@ -1,16 +1,15 @@
 package com.gmail.podkutin.dmitry.voting_system.service;
 
 import com.gmail.podkutin.dmitry.voting_system.AuthorizedUser;
-import com.gmail.podkutin.dmitry.voting_system.repository.RestaurantRepository;
+import com.gmail.podkutin.dmitry.voting_system.model.restaurant.Vote;
 import com.gmail.podkutin.dmitry.voting_system.repository.VoteRepository;
+import com.gmail.podkutin.dmitry.voting_system.util.exception.NotFoundException;
+import com.gmail.podkutin.dmitry.voting_system.web.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import com.gmail.podkutin.dmitry.voting_system.model.restaurant.Vote;
-import com.gmail.podkutin.dmitry.voting_system.util.exception.NotFoundException;
-import com.gmail.podkutin.dmitry.voting_system.web.SecurityUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,11 +21,11 @@ public class VoteService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final VoteRepository voteRepository;
-    private final RestaurantRepository restaurantRepository;
+    private final RestaurantService restaurantService;
 
-    public VoteService(@Autowired VoteRepository voteRepository, @Autowired RestaurantRepository restaurantRepository) {
+    public VoteService(@Autowired VoteRepository voteRepository, @Autowired RestaurantService restaurantService) {
         this.voteRepository = voteRepository;
-        this.restaurantRepository = restaurantRepository;
+        this.restaurantService = restaurantService;
     }
 
     public Vote get(int id) {
@@ -49,19 +48,19 @@ public class VoteService {
     }
 
     public Vote create(int restaurantId, AuthorizedUser authUser) {
-        Vote vote = new Vote(authUser.getUser(), restaurantRepository.getOne(restaurantId));
+        Vote vote = new Vote(authUser.getUser(), restaurantService.get(restaurantId, false));
         checkNew(vote);
         log.info("create {}", vote);
         return voteRepository.save(vote);
     }
 
     public void update(int id, int restaurantId, AuthorizedUser authUser) {
+        checkTimeForDedLine();
         Vote vote = get(id);
-        vote.setRestaurant(restaurantRepository.getOne(restaurantId));
+        vote.setRestaurant(restaurantService.get(restaurantId, false));
         vote.setUser(authUser.getUser());
         Assert.notNull(vote, "vote must not be null");
         assureIdConsistent(vote, id);
-        checkTimeForDedLine();
         log.info("update {} with id={}", vote, id);
         voteRepository.save(vote);
     }

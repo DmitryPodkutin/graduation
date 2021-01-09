@@ -20,7 +20,7 @@ public class DishService {
     private final DishRepository repository;
     private final RestaurantService restaurantService;
 
-    public DishService(@Autowired DishRepository repository,@Autowired RestaurantService restaurantService) {
+    public DishService(@Autowired DishRepository repository, @Autowired RestaurantService restaurantService) {
         this.repository = repository;
         this.restaurantService = restaurantService;
     }
@@ -40,15 +40,16 @@ public class DishService {
     public Dish create(Dish dish, int restaurantId) {
         log.info("create {}", dish);
         checkNew(dish);
-        dish.setRestaurant(restaurantService.get(restaurantId));
+        dish.setRestaurant(restaurantService.get(restaurantId, false));
         return repository.save(dish);
     }
 
     public void update(Dish dish, int id, int restaurantId) {
-        log.info("update {} with id={}", dish, id);
-        assureIdConsistent(dish, id);
         Assert.notNull(dish, "dish must not be null");
-        dish.setRestaurant(restaurantService.get(restaurantId));
+        assureIdConsistent(dish, id);
+        dish.setRestaurant(restaurantService.get(restaurantId, false));
+        get(id, restaurantId);
+        log.info("update {} with id={}", dish, id);
         repository.save(dish);
     }
 
