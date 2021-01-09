@@ -109,6 +109,16 @@ public class DishControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void updateNotFound() throws Exception {
+        Dish updated = DishTestData.getNewDish();
+        perform(MockMvcRequestBuilders.put(REST_URL + DISH_ID_NOT_FOUND)
+                .with(userHttpBasic(admin))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
     public void updateNotAdmin() throws Exception {
         Dish updated = DishTestData.getUpdatedDish();
         perform(MockMvcRequestBuilders.put(REST_URL + DISH_ID)

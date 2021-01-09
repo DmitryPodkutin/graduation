@@ -54,15 +54,13 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
 
     @Test
     public void create() throws Exception {
-        Vote newVote = getNewUserVote();
         ResultActions action = perform(MockMvcRequestBuilders.post("/profile/restaurants/100003/votes")
-                .with(userHttpBasic(UserTestData.user))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(newVote)))
+                .with(userHttpBasic(UserTestData.user)))
                 .andDo(print())
                 .andExpect(status().isCreated());
         Vote created = readFromJson(action, Vote.class);
         final int id = created.id();
+        Vote newVote = getNewUserVote();
         newVote.setId(id);
         VOTE_MATCHER.assertMatch(created, newVote);
 
@@ -77,18 +75,26 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
     @Test
     void update() throws Exception {
         Assume.assumeTrue("Try this test up to 11:00AM", LocalTime.now().isBefore(DEADLINE_TIME));
-        Vote updated = getUpdatedVote();
         perform(MockMvcRequestBuilders.put(VOTE3_REST_URL).contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(UserTestData.user))
-                .content(JsonUtil.writeValue(updated)))
+                .with(userHttpBasic(UserTestData.user)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         TestUtil.mockAuthorize(UserTestData.user);
         Vote taken = service.get(VOTE_3.id());
         if (taken.getRestaurant().id() == (RESTAURANT_3.id())) {
             taken.setRestaurant(RESTAURANT_3);
-            VOTE_MATCHER.assertMatch(taken, updated);
+            VOTE_MATCHER.assertMatch(taken, getUpdatedVote());
         }
+    }
+
+
+    @Test
+    void updateNotFound() throws Exception {
+        Assume.assumeTrue("Try this test up to 11:00AM", LocalTime.now().isBefore(DEADLINE_TIME));
+        perform(MockMvcRequestBuilders.put(VOTE3_REST_URL_NOT_FOUND).contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(UserTestData.user)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test

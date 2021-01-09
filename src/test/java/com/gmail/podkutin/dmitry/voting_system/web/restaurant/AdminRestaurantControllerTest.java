@@ -42,7 +42,7 @@ public class AdminRestaurantControllerTest extends AbstractControllerTest {
         int newId = created.id();
         newRestaurant.setId(newId);
         RESTAURANT_MATCHER.assertMatch(created, newRestaurant);
-        RESTAURANT_MATCHER.assertMatch(service.get(newId), newRestaurant);
+        RESTAURANT_MATCHER.assertMatch(service.get(newId, false), newRestaurant);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(UserTestData.admin)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        Assertions.assertThrows(NotFoundException.class, () -> service.get(RESTAURANT_ID));
+        Assertions.assertThrows(NotFoundException.class, () -> service.get(RESTAURANT_ID, true));
     }
 
     @Test
@@ -88,7 +88,17 @@ public class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
-        RESTAURANT_MATCHER.assertMatch(service.get(updated.getId()), updated);
+        RESTAURANT_MATCHER.assertMatch(service.get(updated.getId(), true), updated);
+    }
+
+    @Test
+    public void updateNotFound() throws Exception {
+        Restaurant updated = RestaurantTestData.getNewRestaurant();
+        perform(MockMvcRequestBuilders.put(ADMIN_REST_URL + RESTAURANT_ID_NOT_FOUND)
+                .with(userHttpBasic(UserTestData.admin))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
@@ -100,5 +110,4 @@ public class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isForbidden());
     }
-
 }
