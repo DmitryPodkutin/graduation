@@ -28,7 +28,7 @@ For windows use Git Bash
 **get All Restaurants** (RequestParam - withMenu=false/true , default withMenu=true)
 
 ```sh
-curl -s http://localhost:8080/voting-system/profile/restaurants/?withMenu=false --user user@yandex.ru:password
+curl -s http://localhost:8080/voting-system/profile/restaurants/ --user user@yandex.ru:password
 ```
 <b>
 <details>
@@ -57,7 +57,7 @@ curl -s http://localhost:8080/voting-system/profile/restaurants/?withMenu=false 
 **get Restaurant** (RequestParam - withMenu=false/true , default withMenu=true)
 
 ```sh
-curl -s http://localhost:8080/voting-system/profile/restaurants/100002?\withMenu\=false  --user user@yandex.ru:password
+curl -s http://localhost:8080/voting-system/profile/restaurants/100002  --user user@yandex.ru:password
 ```
 <b>
 <details>
