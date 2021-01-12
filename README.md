@@ -1,8 +1,8 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a4b79bfd96ce4a0e96b145af99eaf95b)](https://www.codacy.com/gh/DmitryPodkutin/voting_system/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DmitryPodkutin/voting_system&amp;utm_campaign=Badge_Grade)
 # Voting system for deciding where to have lunch.
 
-**REST API using Maven/Hibernate/Spring/SpringMVC/Security?REST(Jackson), Java 8 Stream and Time API<br>
-Storage in databases HSQLDB.**
+**REST API using Maven/Hibernate/Spring/SpringMVC/Security?REST(Jackson),  
+Java 8 Stream and Time API Storage in databases HSQLDB, Swagger**
 
 ### Description
 
@@ -15,15 +15,16 @@ Storage in databases HSQLDB.**
     - If it is before 11:00 we assume that he changed his mind.
     - If it is after 11:00 then it is too late, vote can't be changed
 ------
-##  Commands for Using application
+#### REST UI Documentation
+The application has Swagger UI.  
+After starting APP you need to go about url : http://localhost:8080/voting-system/
+
+## Commands for Using application
 curl samples (application deployed at application context voting-system).
 For windows use Git Bash
 
 
-<br/>
 <b><h3><ins>- user -</ins></h3></b>
-<br>
-
 
 **get All Restaurants** (RequestParam - withMenu=false/true , default withMenu=true)
 
@@ -105,9 +106,8 @@ curl -s -X POST http://localhost:8080/voting-system/profile/restaurants/100003/v
 ```sh
 curl -s -X PUT http://localhost:8080/voting-system/profile/restaurants/100004/votes/100019  --user user@yandex.ru:password
 ```
-<br/>
+
 <b><h3><ins>- admin -</ins></h3></b>
-<br>
 
 **get All Restaurants** (RequestParam - withMenu=false/true , default withMenu=true)
 ```sh
