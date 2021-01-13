@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -40,7 +41,7 @@ public class ProfileVoteController {
 
     @PostMapping(REST_URL)
     @ApiOperation(value = "CREATE Vote for Restaurant")
-    public ResponseEntity<Vote> create(@PathVariable int restaurantId, @AuthenticationPrincipal AuthorizedUser authUser) {
+    public ResponseEntity<Vote> create(@PathVariable int restaurantId, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
         Vote created = service.create(restaurantId, authUser);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -51,7 +52,7 @@ public class ProfileVoteController {
     @PutMapping(REST_URL + "/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @ApiOperation(value = "UPDATE Vote by ID  (you can only change your voice until 11:00AM)")
-    public void update(@PathVariable int restaurantId, @PathVariable int id, @AuthenticationPrincipal AuthorizedUser authUser) {
+    public void update(@PathVariable int restaurantId, @PathVariable int id, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
         service.update(id, restaurantId, authUser);
     }
 
