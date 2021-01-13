@@ -17,7 +17,11 @@ Java 8 Stream and Time API Storage in databases HSQLDB, Swagger**
 ------
 #### REST UI Documentation
 The application has Swagger UI.  
-After starting APP you need to go about url : http://localhost:8080/voting-system/
+After starting APP you need to go about url : http://localhost:8080/voting-system/  
+<ins><b>Login/Password for testing:</b></ins>  
+<b>ADMIN: </b> admin@gmail.com / admin  
+<b>USER: </b> user@yandex.ru / password  
+
 
 ## Commands for Using application
 curl samples (application deployed at application context voting-system).

@@ -31,9 +31,12 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
     protected ApiInfo metaData() {
         return new ApiInfo(
                 "Voting system REST API",
-                "<b>Voting system for deciding where to have lunch</b>\n" +
+                "<ins><b>Voting system for deciding where to have lunch</b></ins>\n" +
                         "REST API using Maven/Hibernate/Spring/SpringMVC/Security\nREST(Jackson), " +
-                        "Java 8 Stream and Time API Storage in databases HSQLDB",
+                        "Java 8 Stream and Time API Storage in databases HSQLDB\n\n" +
+                        "   <ins><b>Login/Password for testing:</b></ins>  \n" +
+                        "<b>ADMIN: </b> admin@gmail.com / admin  \n" +
+                        "<b>USER: </b> user@yandex.ru / password  ",
                 "1.0.0",
                 "https://github.com/DmitryPodkutin/voting_system",
                 new Contact("Podkutin Dmitry", "", "dmitry.podkutin@gmail.com"),
