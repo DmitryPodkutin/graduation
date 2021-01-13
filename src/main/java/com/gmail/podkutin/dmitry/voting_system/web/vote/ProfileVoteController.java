@@ -34,7 +34,7 @@ public class ProfileVoteController {
     }
 
     @GetMapping(value = "/profile/votes")
-    @ApiOperation(value = "GET Vote for Restaurant by Date (Param : withMenu=false/true , default withMenu=true)")
+    @ApiOperation(value = "GET Vote for Restaurant by Date (Param : Date , default Date = NowDate)")
     public Vote get(@RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return date == null ? service.getForeDate(LocalDate.now()) : service.getForeDate(date);
     }
