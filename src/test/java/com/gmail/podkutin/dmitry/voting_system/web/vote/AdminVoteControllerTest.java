@@ -1,24 +1,19 @@
 package com.gmail.podkutin.dmitry.voting_system.web.vote;
 
 import com.gmail.podkutin.dmitry.voting_system.AbstractControllerTest;
+import com.gmail.podkutin.dmitry.voting_system.UserTestData;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import com.gmail.podkutin.dmitry.voting_system.UserTestData;
 
 import java.time.LocalDate;
 
+import static com.gmail.podkutin.dmitry.voting_system.TestUtil.userHttpBasic;
+import static com.gmail.podkutin.dmitry.voting_system.VoteTestData.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import static com.gmail.podkutin.dmitry.voting_system.TestUtil.userHttpBasic;
-import static com.gmail.podkutin.dmitry.voting_system.VoteTestData.*;
-
 public class AdminVoteControllerTest extends AbstractControllerTest {
-
-    @Autowired
-    AdminVoteController restController;
 
     @Test
     public void getAllForRestaurant() throws Exception {

@@ -10,7 +10,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.gmail.podkutin.dmitry.voting_system.TestUtil;
 import com.gmail.podkutin.dmitry.voting_system.UserTestData;
 import com.gmail.podkutin.dmitry.voting_system.model.restaurant.Vote;
-import com.gmail.podkutin.dmitry.voting_system.service.RestaurantService;
 import com.gmail.podkutin.dmitry.voting_system.service.VoteService;
 import com.gmail.podkutin.dmitry.voting_system.web.json.JsonUtil;
 
@@ -30,9 +29,6 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
 
     @Autowired
     VoteService service;
-
-    @Autowired
-    RestaurantService restaurantService;
 
     @Test
     public void get() throws Exception {

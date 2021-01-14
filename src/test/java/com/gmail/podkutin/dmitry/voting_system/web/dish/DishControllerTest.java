@@ -1,31 +1,30 @@
 package com.gmail.podkutin.dmitry.voting_system.web.dish;
 
 import com.gmail.podkutin.dmitry.voting_system.AbstractControllerTest;
+import com.gmail.podkutin.dmitry.voting_system.UserTestData;
+import com.gmail.podkutin.dmitry.voting_system.model.restaurant.Dish;
+import com.gmail.podkutin.dmitry.voting_system.service.DishService;
+import com.gmail.podkutin.dmitry.voting_system.util.exception.NotFoundException;
+import com.gmail.podkutin.dmitry.voting_system.web.json.JsonUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import com.gmail.podkutin.dmitry.voting_system.DishTestData;
-import com.gmail.podkutin.dmitry.voting_system.UserTestData;
-import com.gmail.podkutin.dmitry.voting_system.model.restaurant.Dish;
-import com.gmail.podkutin.dmitry.voting_system.service.DishService;
-import com.gmail.podkutin.dmitry.voting_system.util.exception.NotFoundException;
-import com.gmail.podkutin.dmitry.voting_system.web.json.JsonUtil;
 
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static com.gmail.podkutin.dmitry.voting_system.DishTestData.*;
-import static com.gmail.podkutin.dmitry.voting_system.RestaurantTestData.*;
+import static com.gmail.podkutin.dmitry.voting_system.RestaurantTestData.RESTAURANT_2;
 import static com.gmail.podkutin.dmitry.voting_system.TestUtil.readFromJson;
 import static com.gmail.podkutin.dmitry.voting_system.TestUtil.userHttpBasic;
 import static com.gmail.podkutin.dmitry.voting_system.UserTestData.admin;
 import static com.gmail.podkutin.dmitry.voting_system.UserTestData.user;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class DishControllerTest extends AbstractControllerTest {
 
@@ -72,7 +71,7 @@ public class DishControllerTest extends AbstractControllerTest {
 
     @Test
     public void create() throws Exception {
-        Dish newDish = DishTestData.getNewDish();
+        Dish newDish = getNewDish();
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
                 .with(userHttpBasic(admin))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -88,9 +87,9 @@ public class DishControllerTest extends AbstractControllerTest {
 
     @Test
     public void createNotAdmin() throws Exception {
-        Dish newDish = DishTestData.getNewDish();
+        Dish newDish = getNewDish();
         perform(MockMvcRequestBuilders.post(REST_URL)
-                .with(userHttpBasic(UserTestData.user))
+                .with(userHttpBasic(user))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newDish)))
                 .andDo(print())
@@ -99,7 +98,7 @@ public class DishControllerTest extends AbstractControllerTest {
 
     @Test
     public void update() throws Exception {
-        Dish updated = DishTestData.getUpdatedDish();
+        Dish updated = getUpdatedDish();
         perform(MockMvcRequestBuilders.put(REST_URL + DISH_ID)
                 .with(userHttpBasic(admin))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -110,7 +109,7 @@ public class DishControllerTest extends AbstractControllerTest {
 
     @Test
     public void updateNotFound() throws Exception {
-        Dish updated = DishTestData.getNewDish();
+        Dish updated = getNewDish();
         perform(MockMvcRequestBuilders.put(REST_URL + DISH_ID_NOT_FOUND)
                 .with(userHttpBasic(admin))
                 .contentType(MediaType.APPLICATION_JSON)
@@ -120,7 +119,7 @@ public class DishControllerTest extends AbstractControllerTest {
 
     @Test
     public void updateNotAdmin() throws Exception {
-        Dish updated = DishTestData.getUpdatedDish();
+        Dish updated = getUpdatedDish();
         perform(MockMvcRequestBuilders.put(REST_URL + DISH_ID)
                 .with(userHttpBasic(user))
                 .contentType(MediaType.APPLICATION_JSON)

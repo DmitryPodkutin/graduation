@@ -2,7 +2,6 @@ package com.gmail.podkutin.dmitry.voting_system.web.vote;
 
 import com.gmail.podkutin.dmitry.voting_system.AuthorizedUser;
 import com.gmail.podkutin.dmitry.voting_system.model.restaurant.Vote;
-import com.gmail.podkutin.dmitry.voting_system.repository.RestaurantRepository;
 import com.gmail.podkutin.dmitry.voting_system.service.VoteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,12 +23,10 @@ import java.util.Objects;
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = "Controller_For_Users", value = "Requests used by the users")
 public class ProfileVoteController {
-    static final String REST_URL = "/profile/restaurants/{restaurantId}/votes";
-    final RestaurantRepository restaurantRepository;
+    private static final String REST_URL = "/profile/restaurants/{restaurantId}/votes";
     private final VoteService service;
 
-    public ProfileVoteController(@Autowired RestaurantRepository restaurantRepository, @Autowired VoteService service) {
-        this.restaurantRepository = restaurantRepository;
+    public ProfileVoteController(@Autowired VoteService service) {
         this.service = service;
     }
 
