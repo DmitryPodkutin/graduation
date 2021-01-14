@@ -1,10 +1,10 @@
-package com.gmail.podkutin.dmitry.voting_system.service;
+package com.gmail.podkutin.dmitry.votingsystem.service;
 
-import com.gmail.podkutin.dmitry.voting_system.AuthorizedUser;
-import com.gmail.podkutin.dmitry.voting_system.model.restaurant.Vote;
-import com.gmail.podkutin.dmitry.voting_system.repository.VoteRepository;
-import com.gmail.podkutin.dmitry.voting_system.util.exception.NotFoundException;
-import com.gmail.podkutin.dmitry.voting_system.web.SecurityUtil;
+import com.gmail.podkutin.dmitry.votingsystem.AuthorizedUser;
+import com.gmail.podkutin.dmitry.votingsystem.model.restaurant.Vote;
+import com.gmail.podkutin.dmitry.votingsystem.repository.VoteRepository;
+import com.gmail.podkutin.dmitry.votingsystem.util.exception.NotFoundException;
+import com.gmail.podkutin.dmitry.votingsystem.web.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import static com.gmail.podkutin.dmitry.voting_system.util.ValidationUtil.*;
+import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.*;
 
 @Service
 public class VoteService {
@@ -33,11 +32,6 @@ public class VoteService {
         return voteRepository.findById(id)
                 .filter(vote -> vote.getUser().getId() == SecurityUtil.authUserId())
                 .orElseThrow(() -> new NotFoundException(" Not found entity with " + id));
-    }
-
-    public List<Vote> getAllForRestaurant(int restaurantId) {
-        log.info("getAll");
-        return voteRepository.getAllForRestaurant(restaurantId);
     }
 
     public Vote getForeDate(LocalDate date) {

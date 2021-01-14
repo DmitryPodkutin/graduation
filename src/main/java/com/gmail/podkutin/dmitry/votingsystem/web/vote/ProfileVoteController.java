@@ -1,8 +1,8 @@
-package com.gmail.podkutin.dmitry.voting_system.web.vote;
+package com.gmail.podkutin.dmitry.votingsystem.web.vote;
 
-import com.gmail.podkutin.dmitry.voting_system.AuthorizedUser;
-import com.gmail.podkutin.dmitry.voting_system.model.restaurant.Vote;
-import com.gmail.podkutin.dmitry.voting_system.service.VoteService;
+import com.gmail.podkutin.dmitry.votingsystem.AuthorizedUser;
+import com.gmail.podkutin.dmitry.votingsystem.model.restaurant.Vote;
+import com.gmail.podkutin.dmitry.votingsystem.service.VoteService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

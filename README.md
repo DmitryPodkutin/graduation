@@ -136,42 +136,4 @@ curl -s http://localhost:8080/voting-system/admin/restaurants/100003/dishes --us
 curl -s -i -X DELETE http://localhost:8080/voting-system/admin/restaurants/100003/dishes/100010  --user admin@gmail.com:admin
 ```
 
-**Get a history of restaurant Votes**
-
-```sh
-curl -s  http://localhost:8080/voting-system/admin/restaurants/100004/votes --user admin@gmail.com:admin
-```
-
-<b>
-<details>
-<summary><b>RESULT</b></summary>
-<pre>
-
-{
-      "date": "2020-10-19",
-      "id": 100015,
-      "restaurant": {
-          "id": 100004,
-          "name": "The Lounge Cafe"
-      }
-  },
-  {
-      "date": "2020-10-23",
-      "id": 100014,
-      "restaurant": {
-          "id": 100004,
-          "name": "The Lounge Cafe"
-      }
-  },
-  {
-      "date": "2020-11-09",
-      "id": 100017,
-      "restaurant": {
-          "id": 100004,
-          "name": "The Lounge Cafe"
-      }
-  }
-</pre>
-</details>
-</b>
 <br>
