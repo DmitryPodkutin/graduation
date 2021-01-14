@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.gmail.podkutin.dmitry.voting_system.web">
+    <logger name="com.gmail.podkutin.dmitry.votingsystem.web">
         <level value="debug"/>
         <appender-ref ref="file"/>
         <appender-ref ref="console"/>
