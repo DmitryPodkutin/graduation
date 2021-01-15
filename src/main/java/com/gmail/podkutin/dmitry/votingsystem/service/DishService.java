@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class DishService {
                 .filter(dish -> dish.getRestaurant().getId() == restaurantId), " Not found entity with " + id);
     }
 
+    @Transactional
     public Dish create(Dish dish, int restaurantId) {
         log.info("create {}", dish);
         checkNew(dish);
@@ -42,9 +44,9 @@ public class DishService {
         return repository.save(dish);
     }
 
+    @Transactional
     public void update(Dish dish, int id, int restaurantId) {
         Assert.notNull(dish, "dish must not be null");
-        assureIdConsistent(dish, id);
         dish.setRestaurant(restaurantService.get(restaurantId, false));
         checkNotFound(id == repository.save(dish).id(), " " + id);
         log.info("update {} with id={}", dish, id);

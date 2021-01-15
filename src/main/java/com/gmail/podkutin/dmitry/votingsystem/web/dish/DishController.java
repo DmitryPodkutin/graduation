@@ -15,6 +15,8 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.assureIdConsistent;
+
 @RestController
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = "Controller_For_Admin", value = "Requests used by the admins")
@@ -53,6 +55,7 @@ public class DishController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @ApiOperation(value = "UPDATE Restaurant Dish by ID")
     public void update(@Valid @RequestBody Dish dish, @PathVariable int id, @PathVariable int restaurantId) {
+        assureIdConsistent(dish, id);
         service.update(dish, id, restaurantId);
     }
 

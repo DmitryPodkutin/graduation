@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;
@@ -39,6 +40,7 @@ public class VoteService {
         return checkNotFoundWithEntity(voteRepository.getForeDate(date, userId), " The user's (" + userId + ") voice was not found ");
     }
 
+    @Transactional
     public Vote create(int restaurantId, AuthorizedUser authUser) {
         Vote vote = new Vote(authUser.getUser(), restaurantService.get(restaurantId, false));
         checkNew(vote);
@@ -46,6 +48,7 @@ public class VoteService {
         return voteRepository.save(vote);
     }
 
+    @Transactional
     public void update(int id, int restaurantId, AuthorizedUser authUser) {
         checkTimeForDedLine();
         Vote vote = get(id);

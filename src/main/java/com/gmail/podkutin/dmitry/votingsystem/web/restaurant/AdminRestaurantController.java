@@ -14,6 +14,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 
+import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.assureIdConsistent;
+
 @RestController
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Api(tags = "Controller_For_Admin", value = "Requests used by the admins")
@@ -41,6 +43,7 @@ public class AdminRestaurantController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody @Valid Restaurant restaurant, @PathVariable int id) {
+        assureIdConsistent(restaurant, id);
         service.update(restaurant, id);
     }
 

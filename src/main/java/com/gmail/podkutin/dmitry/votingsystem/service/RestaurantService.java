@@ -46,7 +46,6 @@ public class RestaurantService {
     }
 
     public void update(Restaurant restaurant, int id) {
-        assureIdConsistent(restaurant, id);
         Assert.notNull(restaurant, "restaurant must not be null");
         checkNotFound(id == repository.save(restaurant).id(), " " + id);
         log.info("update {} with id={}", restaurant, id);
