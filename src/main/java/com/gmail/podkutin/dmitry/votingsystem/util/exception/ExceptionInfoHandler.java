@@ -19,11 +19,13 @@ import java.util.Objects;
 
 @RestControllerAdvice(annotations = RestController.class)
 public class ExceptionInfoHandler {
-    private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ExceptionInfoHandler.class);
     public static final String EXCEPTION_DUPLICATE_VOTE = "You already voted today";
     public static final String EXCEPTION_DUPLICATE_RESTAURANT = "A restaurant with this name already exists";
     public static final String EXCEPTION_DUPLICATE_DISH = "A dish with this name for this restaurant already exists in this date";
-
+    private final Map<String, String> sqlLocalizedMessage = Map.of("VOTE_USER_ID_DATE_U_INDEX",EXCEPTION_DUPLICATE_VOTE,
+            "RESTAURANT_UNIQUE_NAME_INDEX", EXCEPTION_DUPLICATE_RESTAURANT,
+            "DISH_UNIQUE_RESTAURANT_ID_DATE_NAME_IDX",EXCEPTION_DUPLICATE_DISH);
     //  http://stackoverflow.com/a/22358422/548473
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     @ExceptionHandler(NotFoundException.class)
@@ -41,12 +43,9 @@ public class ExceptionInfoHandler {
     @ResponseStatus(HttpStatus.CONFLICT)  // 409
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
-        Map<String, String> map = Map.of("VOTE_USER_ID_DATE_U_INDEX",EXCEPTION_DUPLICATE_VOTE,
-                "RESTAURANT_UNIQUE_NAME_INDEX", EXCEPTION_DUPLICATE_RESTAURANT,
-                "DISH_UNIQUE_RESTAURANT_ID_DATE_NAME_IDX",EXCEPTION_DUPLICATE_DISH);
-        for (String key : map.keySet()) {
+        for (String key : sqlLocalizedMessage.keySet()) {
             if (Objects.requireNonNull(e.getRootCause()).getLocalizedMessage().contains(key)) {
-                return logAndGetErrorInfo(req, new VotingException(map.get(key)), false, ErrorType.VALIDATION_ERROR);
+                return logAndGetErrorInfo(req, new VotingException(sqlLocalizedMessage.get(key)), false, ErrorType.VALIDATION_ERROR);
             }
         }
         return logAndGetErrorInfo(req, e, true, ErrorType.DATA_ERROR);
@@ -69,9 +68,9 @@ public class ExceptionInfoHandler {
         Throwable rootCause = ValidationUtil.getRootCause(e);
         errorDetails = errorDetails.length == 0 ? new String[]{rootCause.getMessage()} : errorDetails;
         if (logException) {
-            log.error(errorType + " at request " + req.getRequestURL(), rootCause);
+            LOG.error(errorType + " at request " + req.getRequestURL(), rootCause);
         } else {
-            log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), errorDetails);
+            LOG.warn("{} at request  {}: {}", errorType, req.getRequestURL(), errorDetails);
         }
         return new ErrorInfo(req.getRequestURL(), errorType, errorDetails);
     }
