@@ -23,8 +23,8 @@ public class Dish extends AbstractNamedEntity {
     private LocalDate date;
 
     @Column(name = "price", nullable = false)
-    @Range(min = 1, max = 10000, message = "The price should be in the range from 1 to 10000")
-    private long price;
+    @Range(min = 1, max = 1000000, message = "The price should be in the range from 1 to 1000000")
+    private int price;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

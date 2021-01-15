@@ -52,5 +52,4 @@ public class ProfileVoteController {
     public void update(@PathVariable int restaurantId, @PathVariable int id, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
         service.update(id, restaurantId, authUser);
     }
-
 }

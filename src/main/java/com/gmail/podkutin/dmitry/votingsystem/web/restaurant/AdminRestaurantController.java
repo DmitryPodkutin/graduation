@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -28,7 +29,7 @@ public class AdminRestaurantController {
 
     @ApiOperation(value = "CREATE new Restaurant")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> create(@RequestBody @Valid Restaurant restaurant) {
         Restaurant created = service.create(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -39,7 +40,7 @@ public class AdminRestaurantController {
     @ApiOperation(value = "UPDATE Restaurant by ID")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void update(@RequestBody @Valid Restaurant restaurant, @PathVariable int id) {
         service.update(restaurant, id);
     }
 
@@ -49,6 +50,4 @@ public class AdminRestaurantController {
     public void delete(@PathVariable int id) {
         service.delete(id);
     }
-
-
 }
