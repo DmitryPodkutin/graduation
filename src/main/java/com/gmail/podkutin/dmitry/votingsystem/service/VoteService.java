@@ -1,7 +1,7 @@
 package com.gmail.podkutin.dmitry.votingsystem.service;
 
-import com.gmail.podkutin.dmitry.votingsystem.AuthorizedUser;
 import com.gmail.podkutin.dmitry.votingsystem.model.restaurant.Vote;
+import com.gmail.podkutin.dmitry.votingsystem.model.user.User;
 import com.gmail.podkutin.dmitry.votingsystem.repository.VoteRepository;
 import com.gmail.podkutin.dmitry.votingsystem.web.SecurityUtil;
 import org.slf4j.Logger;
@@ -41,19 +41,19 @@ public class VoteService {
     }
 
     @Transactional
-    public Vote create(int restaurantId, AuthorizedUser authUser) {
-        Vote vote = new Vote(authUser.getUser(), restaurantService.get(restaurantId, false));
+    public Vote create(int restaurantId, User user) {
+        Vote vote = new Vote(user, restaurantService.get(restaurantId, false));
         checkNew(vote);
         log.info("create {}", vote);
         return voteRepository.save(vote);
     }
 
     @Transactional
-    public void update(int id, int restaurantId, AuthorizedUser authUser) {
+    public void update(int id, int restaurantId, User user) {
         checkTimeForDedLine();
         Vote vote = get(id);
         vote.setRestaurant(restaurantService.get(restaurantId, false));
-        vote.setUser(authUser.getUser());
+        vote.setUser(user);
         Assert.notNull(vote, "vote must not be null");
         assureIdConsistent(vote, id);
         log.info("update {} with id={}", vote, id);

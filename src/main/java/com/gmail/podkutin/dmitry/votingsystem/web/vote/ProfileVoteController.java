@@ -39,7 +39,7 @@ public class ProfileVoteController {
     @PostMapping(REST_URL)
     @ApiOperation(value = "CREATE Vote for Restaurant")
     public ResponseEntity<Vote> create(@PathVariable int restaurantId, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
-        Vote created = service.create(restaurantId, authUser);
+        Vote created = service.create(restaurantId, authUser.getUser());
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(restaurantId, Objects.requireNonNull(created).getId()).toUri();
@@ -50,6 +50,6 @@ public class ProfileVoteController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @ApiOperation(value = "UPDATE Vote by ID  (you can only change your voice until 11:00AM)")
     public void update(@PathVariable int restaurantId, @PathVariable int id, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
-        service.update(id, restaurantId, authUser);
+        service.update(id, restaurantId, authUser.getUser());
     }
 }
