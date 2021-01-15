@@ -1,13 +1,12 @@
 package com.gmail.podkutin.dmitry.votingsystem.service;
 
+import com.gmail.podkutin.dmitry.votingsystem.model.restaurant.Restaurant;
 import com.gmail.podkutin.dmitry.votingsystem.repository.RestaurantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import com.gmail.podkutin.dmitry.votingsystem.model.restaurant.Restaurant;
-import com.gmail.podkutin.dmitry.votingsystem.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,10 +32,11 @@ public class RestaurantService {
 
     public Restaurant get(int id, boolean withMenu) {
         log.info("get {}", id);
+        String message = " Not found entity with " + id;
         if (withMenu) {
-            repository.getWithMenuDay(id, LocalDate.now()).orElseThrow(() -> new NotFoundException(" Not found entity with " + id));
+            return checkNotFoundWithEntity(repository.getWithMenuDay(id, LocalDate.now()), message);
         }
-        return repository.findById(id).orElseThrow(() -> new NotFoundException(" Not found entity with " + id));
+        return checkNotFoundWithEntity(repository.findById(id), message);
     }
 
     public Restaurant create(Restaurant restaurant) {

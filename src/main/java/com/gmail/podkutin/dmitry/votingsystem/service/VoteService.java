@@ -3,7 +3,6 @@ package com.gmail.podkutin.dmitry.votingsystem.service;
 import com.gmail.podkutin.dmitry.votingsystem.AuthorizedUser;
 import com.gmail.podkutin.dmitry.votingsystem.model.restaurant.Vote;
 import com.gmail.podkutin.dmitry.votingsystem.repository.VoteRepository;
-import com.gmail.podkutin.dmitry.votingsystem.util.exception.NotFoundException;
 import com.gmail.podkutin.dmitry.votingsystem.web.SecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +28,15 @@ public class VoteService {
 
     public Vote get(int id) {
         log.info("get {}", id);
-        return voteRepository.findById(id)
-                .filter(vote -> vote.getUser().getId() == SecurityUtil.authUserId())
-                .orElseThrow(() -> new NotFoundException(" Not found entity with " + id));
+        return checkNotFoundWithEntity(voteRepository.findById(id)
+                .filter(vote -> vote.getUser().getId() == SecurityUtil.authUserId()), " Not found entity with " + id);
+
     }
 
     public Vote getForeDate(LocalDate date) {
         int userId = SecurityUtil.authUserId();
         log.info("getForeDate date{},UserId: {}", date, userId);
-        return voteRepository.getForeDate(date, userId)
-                .orElseThrow(() -> new NotFoundException(" The user's (" + userId + ") voice was not found "));
+        return checkNotFoundWithEntity(voteRepository.getForeDate(date, userId), " The user's (" + userId + ") voice was not found ");
     }
 
     public Vote create(int restaurantId, AuthorizedUser authUser) {

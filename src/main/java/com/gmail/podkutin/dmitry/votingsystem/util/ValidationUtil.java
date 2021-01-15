@@ -5,12 +5,17 @@ import com.gmail.podkutin.dmitry.votingsystem.util.exception.NotFoundException;
 import com.gmail.podkutin.dmitry.votingsystem.util.exception.VotingException;
 
 import java.time.LocalTime;
+import java.util.Optional;
 
 public class ValidationUtil {
 
     public static final LocalTime DEADLINE_TIME = LocalTime.of(11, 0);
 
     private ValidationUtil() {
+    }
+
+    public static <T> T checkNotFoundWithEntity(Optional<T> entity, String message){
+        return entity.orElseThrow(() -> new NotFoundException(message));
     }
 
     public static void checkNotFoundWithId(int found, int id) {

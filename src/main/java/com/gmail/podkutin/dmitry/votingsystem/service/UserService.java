@@ -1,6 +1,7 @@
 package com.gmail.podkutin.dmitry.votingsystem.service;
 
 import com.gmail.podkutin.dmitry.votingsystem.AuthorizedUser;
+import com.gmail.podkutin.dmitry.votingsystem.model.user.User;
 import com.gmail.podkutin.dmitry.votingsystem.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.gmail.podkutin.dmitry.votingsystem.model.user.User;
-import com.gmail.podkutin.dmitry.votingsystem.util.exception.NotFoundException;
+
+import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.checkNotFoundWithEntity;
 
 
 @Service("userService")
@@ -31,7 +32,7 @@ public class UserService implements UserDetailsService, AuthenticationManager {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = repository.getByEmail(email.toLowerCase()).orElseThrow(() -> new NotFoundException(" Not found user with (method loadUserByUsername) "));
+        User user = checkNotFoundWithEntity(repository.getByEmail(email.toLowerCase()), " Not found user with (method loadUserByUsername) ");
         if (user == null) {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }
