@@ -1,34 +1,32 @@
 package com.gmail.podkutin.dmitry.votingsystem.web.vote;
 
 import com.gmail.podkutin.dmitry.votingsystem.AbstractControllerTest;
-import org.junit.Assume;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import com.gmail.podkutin.dmitry.votingsystem.TestUtil;
 import com.gmail.podkutin.dmitry.votingsystem.UserTestData;
 import com.gmail.podkutin.dmitry.votingsystem.model.restaurant.Vote;
 import com.gmail.podkutin.dmitry.votingsystem.service.VoteService;
 import com.gmail.podkutin.dmitry.votingsystem.web.json.JsonUtil;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.time.LocalTime;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static com.gmail.podkutin.dmitry.votingsystem.RestaurantTestData.RESTAURANT_2;
 import static com.gmail.podkutin.dmitry.votingsystem.RestaurantTestData.RESTAURANT_3;
 import static com.gmail.podkutin.dmitry.votingsystem.TestUtil.readFromJson;
 import static com.gmail.podkutin.dmitry.votingsystem.TestUtil.userHttpBasic;
 import static com.gmail.podkutin.dmitry.votingsystem.VoteTestData.*;
-import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.DEADLINE_TIME;
+import static com.gmail.podkutin.dmitry.votingsystem.util.VotingUtil.setClockAfterDeadLine;
+import static com.gmail.podkutin.dmitry.votingsystem.util.VotingUtil.setClockBeforeDeadLine;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class ProfileVoteControllerTest extends AbstractControllerTest {
 
     @Autowired
-    VoteService service;
+    private VoteService service;
 
     @Test
     public void get() throws Exception {
@@ -70,7 +68,7 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        Assume.assumeTrue("Try this test up to 11:00AM", LocalTime.now().isBefore(DEADLINE_TIME));
+        setClockBeforeDeadLine();
         perform(MockMvcRequestBuilders.put(VOTE3_REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(UserTestData.user)))
                 .andDo(print())
@@ -83,10 +81,9 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
         }
     }
 
-
     @Test
     void updateNotFound() throws Exception {
-        Assume.assumeTrue("Try this test up to 11:00AM", LocalTime.now().isBefore(DEADLINE_TIME));
+        setClockBeforeDeadLine();
         perform(MockMvcRequestBuilders.put(VOTE3_REST_URL_NOT_FOUND).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(UserTestData.user)))
                 .andDo(print())
@@ -95,7 +92,7 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
 
     @Test
     public void updateAfterDeadLineTime() throws Exception {
-        Assume.assumeTrue("Try this test after 11:00AM", LocalTime.now().isAfter(DEADLINE_TIME));
+        setClockAfterDeadLine();
         Vote updated = getUpdatedVote();
         perform(MockMvcRequestBuilders.put(VOTE3_REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(UserTestData.user))

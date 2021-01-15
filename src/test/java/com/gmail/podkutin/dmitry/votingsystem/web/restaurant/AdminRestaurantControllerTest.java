@@ -26,7 +26,7 @@ public class AdminRestaurantControllerTest extends AbstractControllerTest {
     private static final String ADMIN_REST_URL = AdminRestaurantController.REST_URL + '/';
 
     @Autowired
-    RestaurantService service;
+    private RestaurantService service;
 
     @Test
     public void create() throws Exception {

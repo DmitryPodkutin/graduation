@@ -18,7 +18,7 @@ public class ProfileRestaurantControllerTest extends AbstractControllerTest {
     private static final String REST_URL = ProfileRestaurantController.REST_URL + '/';
 
     @Autowired
-    ProfileRestaurantController restController;
+    private ProfileRestaurantController restController;
 
     @Test
     public void getWithMenuDay() throws Exception {

@@ -31,7 +31,7 @@ public class DishControllerTest extends AbstractControllerTest {
     private static final String REST_URL = "/admin/restaurants/100003/dishes/";
 
     @Autowired
-    DishService service;
+    private DishService service;
 
     @Test
     public void getAllWithRestaurant() throws Exception {
