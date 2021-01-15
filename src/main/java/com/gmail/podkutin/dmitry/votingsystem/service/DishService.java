@@ -46,9 +46,8 @@ public class DishService {
         Assert.notNull(dish, "dish must not be null");
         assureIdConsistent(dish, id);
         dish.setRestaurant(restaurantService.get(restaurantId, false));
-        get(id, restaurantId);
+        checkNotFound(id == repository.save(dish).id(), " " + id);
         log.info("update {} with id={}", dish, id);
-        repository.save(dish);
     }
 
     public void delete(int id, int restaurantId) {
