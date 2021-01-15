@@ -5,6 +5,7 @@ import com.gmail.podkutin.dmitry.votingsystem.TestUtil;
 import com.gmail.podkutin.dmitry.votingsystem.UserTestData;
 import com.gmail.podkutin.dmitry.votingsystem.model.restaurant.Vote;
 import com.gmail.podkutin.dmitry.votingsystem.service.VoteService;
+import com.gmail.podkutin.dmitry.votingsystem.util.TimeUtil;
 import com.gmail.podkutin.dmitry.votingsystem.web.json.JsonUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,16 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
+
 import static com.gmail.podkutin.dmitry.votingsystem.RestaurantTestData.RESTAURANT_2;
 import static com.gmail.podkutin.dmitry.votingsystem.RestaurantTestData.RESTAURANT_3;
 import static com.gmail.podkutin.dmitry.votingsystem.TestUtil.readFromJson;
 import static com.gmail.podkutin.dmitry.votingsystem.TestUtil.userHttpBasic;
 import static com.gmail.podkutin.dmitry.votingsystem.VoteTestData.*;
-import static com.gmail.podkutin.dmitry.votingsystem.util.VotingUtil.setClockAfterDeadLine;
-import static com.gmail.podkutin.dmitry.votingsystem.util.VotingUtil.setClockBeforeDeadLine;
+import static com.gmail.podkutin.dmitry.votingsystem.util.TimeUtil.setClock;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -92,11 +96,20 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
 
     @Test
     public void updateAfterDeadLineTime() throws Exception {
-        setClockAfterDeadLine();
+        setClock(Clock.fixed(
+                Instant.parse("2020-08-22T12:00:00Z"),
+                ZoneOffset.UTC));
         Vote updated = getUpdatedVote();
         perform(MockMvcRequestBuilders.put(VOTE3_REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(UserTestData.user))
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isConflict());
     }
+
+    private void setClockBeforeDeadLine() {
+        setClock(TimeUtil.clock = Clock.fixed(
+                Instant.parse("2020-08-22T10:00:00Z"),
+                ZoneOffset.UTC));
+    }
+
 }

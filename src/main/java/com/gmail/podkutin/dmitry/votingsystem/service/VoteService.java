@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
 import java.time.LocalDate;
 
 import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.*;
+import static com.gmail.podkutin.dmitry.votingsystem.util.TimeUtil.checkTimeForDedLine;
 
 @Service
 public class VoteService {

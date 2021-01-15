@@ -2,19 +2,15 @@ package com.gmail.podkutin.dmitry.votingsystem.util;
 
 import com.gmail.podkutin.dmitry.votingsystem.model.AbstractBaseEntity;
 import com.gmail.podkutin.dmitry.votingsystem.util.exception.NotFoundException;
-import com.gmail.podkutin.dmitry.votingsystem.util.exception.VotingException;
 
-import java.time.LocalTime;
 import java.util.Optional;
 
 public class ValidationUtil {
 
-    public static final LocalTime DEADLINE_TIME = LocalTime.of(11, 0);
-
     private ValidationUtil() {
     }
 
-    public static <T> T checkNotFoundWithEntity(Optional<T> entity, String message){
+    public static <T> T checkNotFoundWithEntity(Optional<T> entity, String message) {
         return entity.orElseThrow(() -> new NotFoundException(message));
     }
 
@@ -52,11 +48,5 @@ public class ValidationUtil {
             result = cause;
         }
         return result;
-    }
-
-    public static void checkTimeForDedLine() {
-        if (LocalTime.now().isAfter(DEADLINE_TIME)) {
-            throw new VotingException("It's too late to change vote");
-        }
     }
 }

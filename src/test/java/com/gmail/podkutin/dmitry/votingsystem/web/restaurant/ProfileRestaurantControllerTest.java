@@ -1,24 +1,20 @@
 package com.gmail.podkutin.dmitry.votingsystem.web.restaurant;
 
 import com.gmail.podkutin.dmitry.votingsystem.AbstractControllerTest;
+import com.gmail.podkutin.dmitry.votingsystem.UserTestData;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import com.gmail.podkutin.dmitry.votingsystem.UserTestData;
 
+import static com.gmail.podkutin.dmitry.votingsystem.RestaurantTestData.*;
+import static com.gmail.podkutin.dmitry.votingsystem.TestUtil.userHttpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static com.gmail.podkutin.dmitry.votingsystem.RestaurantTestData.*;
-import static com.gmail.podkutin.dmitry.votingsystem.TestUtil.userHttpBasic;
 
 public class ProfileRestaurantControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = ProfileRestaurantController.REST_URL + '/';
-
-    @Autowired
-    private ProfileRestaurantController restController;
 
     @Test
     public void getWithMenuDay() throws Exception {
