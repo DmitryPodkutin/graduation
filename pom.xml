@@ -8,7 +8,7 @@
 
     <version>1.0-SNAPSHOT</version>
 
-    <name>RestaurantsRating_API</name>
+    <name>Voting_System_API</name>
 
     <properties>
         <java.version>15</java.version>
