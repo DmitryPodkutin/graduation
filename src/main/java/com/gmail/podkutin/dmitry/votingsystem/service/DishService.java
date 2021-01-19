@@ -39,7 +39,6 @@ public class DishService {
     @Transactional
     public Dish create(Dish dish, int restaurantId) {
         log.info("create {}", dish);
-        checkNew(dish);
         dish.setRestaurant(restaurantService.get(restaurantId, false));
         return repository.save(dish);
     }

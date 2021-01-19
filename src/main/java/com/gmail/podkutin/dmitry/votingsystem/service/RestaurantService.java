@@ -41,7 +41,6 @@ public class RestaurantService {
 
     public Restaurant create(Restaurant restaurant) {
         log.info("create {}", restaurant);
-        checkNew(restaurant);
         return repository.save(restaurant);
     }
 

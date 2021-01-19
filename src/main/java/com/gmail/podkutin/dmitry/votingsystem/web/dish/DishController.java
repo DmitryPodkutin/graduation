@@ -16,6 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.assureIdConsistent;
+import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -44,6 +45,7 @@ public class DishController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "CREATE new Dish for Restaurant")
     public ResponseEntity<Dish> create(@Valid @RequestBody Dish dish, @PathVariable int restaurantId) {
+        checkNew(dish);
         Dish created = service.create(dish, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")

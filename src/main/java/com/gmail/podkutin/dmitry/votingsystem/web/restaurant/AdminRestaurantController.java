@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.net.URI;
 
 import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.assureIdConsistent;
+import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,6 +33,7 @@ public class AdminRestaurantController {
     @ApiOperation(value = "CREATE new Restaurant")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@RequestBody @Valid Restaurant restaurant) {
+        checkNew(restaurant);
         Restaurant created = service.create(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
