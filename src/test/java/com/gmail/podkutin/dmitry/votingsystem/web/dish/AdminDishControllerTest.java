@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class DishControllerTest extends AbstractControllerTest {
+public class AdminDishControllerTest extends AbstractControllerTest {
 
     private static final String REST_URL = "/admin/restaurants/100003/dishes/";
 

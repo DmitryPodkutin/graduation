@@ -19,7 +19,7 @@ import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.checkNe
 
 @RestController
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = "Controller_For_Admin", value = "Requests used by the admins")
+@Api(tags = "Admin_Restaurant_Controller", description = "Restaurant item management")
 public class AdminRestaurantController {
 
     private final RestaurantService service;

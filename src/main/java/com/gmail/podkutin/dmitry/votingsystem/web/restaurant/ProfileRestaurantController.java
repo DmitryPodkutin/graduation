@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = ProfileRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = "Controller_For_Users", value = "Requests used by the users")
+@Api(tags = "Profile_Restaurant_Controller", description = "User browsing of restaurants")
 public class ProfileRestaurantController {
 
     static final String REST_URL = "/profile/restaurants";

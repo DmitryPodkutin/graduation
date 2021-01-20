@@ -19,14 +19,14 @@ import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.assureI
 import static com.gmail.podkutin.dmitry.votingsystem.util.ValidationUtil.checkNew;
 
 @RestController
-@RequestMapping(value = DishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = "Controller_For_Admin", value = "Requests used by the admins")
+@RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(tags = "Admin_Dish_Controller", description = "Menu item management")
 
-public class DishController {
+public class AdminDishController {
     static final String REST_URL = "/admin/restaurants/{restaurantId}/dishes";
     private final DishService service;
 
-    public DishController(@Autowired DishService service) {
+    public AdminDishController(@Autowired DishService service) {
         this.service = service;
     }
 

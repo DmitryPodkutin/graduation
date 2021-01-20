@@ -21,7 +21,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = "Controller_For_Users", value = "Requests used by the users")
+@Api(tags = "Profile_Vote_Controller", description = "Voting control")
 public class ProfileVoteController {
     private static final String REST_URL = "/profile/restaurants/{restaurantId}/votes";
     private final VoteService service;
