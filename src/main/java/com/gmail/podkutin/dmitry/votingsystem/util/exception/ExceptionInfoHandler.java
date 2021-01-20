@@ -43,9 +43,9 @@ public class ExceptionInfoHandler {
     @ResponseStatus(HttpStatus.CONFLICT)  // 409
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
-        for (String key : sqlLocalizedMessage.keySet()) {
-            if (Objects.requireNonNull(e.getRootCause()).getLocalizedMessage().contains(key)) {
-                return logAndGetErrorInfo(req, new VotingException(sqlLocalizedMessage.get(key)), false, ErrorType.VALIDATION_ERROR);
+        for (Map.Entry<String, String> entry : sqlLocalizedMessage.entrySet()) {
+            if (Objects.requireNonNull(e.getRootCause()).getLocalizedMessage().contains(entry.getKey())) {
+                return logAndGetErrorInfo(req, new VotingException(entry.getValue()), false, ErrorType.VALIDATION_ERROR);
             }
         }
         return logAndGetErrorInfo(req, e, true, ErrorType.DATA_ERROR);
