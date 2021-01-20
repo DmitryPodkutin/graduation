@@ -33,7 +33,7 @@ public class ProfileVoteController {
     @GetMapping(value = "/profile/votes")
     @ApiOperation(value = "GET Vote for Restaurant by Date (Param : Date , default Date = NowDate)")
     public Vote get(@RequestParam(value = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return date == null ? service.getForeDate(LocalDate.now()) : service.getForeDate(date);
+        return service.getForeDate(date == null ? LocalDate.now() : date);
     }
 
     @PostMapping(REST_URL)
@@ -46,10 +46,10 @@ public class ProfileVoteController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @PutMapping(REST_URL + "/{id}")
+    @PutMapping(REST_URL)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @ApiOperation(value = "UPDATE Vote by ID  (you can only change your voice until 11:00AM)")
-    public void update(@PathVariable int restaurantId, @PathVariable int id, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
-        service.update(id, restaurantId, authUser.getUser());
+    public void update(@PathVariable int restaurantId,  @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
+        service.update(restaurantId, authUser.getUser());
     }
 }

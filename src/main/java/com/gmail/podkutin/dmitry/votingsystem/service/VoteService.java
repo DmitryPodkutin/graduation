@@ -50,14 +50,12 @@ public class VoteService {
     }
 
     @Transactional
-    public void update(int id, int restaurantId, User user) {
+    public void update(int restaurantId, User user) {
         checkTimeForDedLine();
-        Vote vote = get(id);
+        Vote vote = getForeDate(LocalDate.now());
         vote.setRestaurant(restaurantService.get(restaurantId, false));
         vote.setUser(user);
-        Assert.notNull(vote, "vote must not be null");
-        assureIdConsistent(vote, id);
-        log.info("update {} with id={}", vote, id);
+        log.info("update {} with id={}", vote, vote.id());
         voteRepository.save(vote);
     }
 }

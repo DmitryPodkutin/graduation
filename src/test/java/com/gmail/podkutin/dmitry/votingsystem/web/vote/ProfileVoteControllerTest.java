@@ -111,5 +111,4 @@ public class ProfileVoteControllerTest extends AbstractControllerTest {
                 Instant.parse("2020-08-22T10:00:00Z"),
                 ZoneOffset.UTC));
     }
-
 }

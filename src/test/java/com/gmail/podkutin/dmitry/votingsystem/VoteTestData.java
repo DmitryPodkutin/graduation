@@ -6,8 +6,8 @@ import java.time.LocalDate;
 
 public class VoteTestData {
     public static final TestMatcher<Vote> VOTE_MATCHER = TestMatcher.usingIgnoringFieldsComparator(Vote.class, "user", "restaurant.menu");
-    public static final String VOTE3_REST_URL = "/profile/restaurants/100004/votes/100017";
-    public static final String VOTE3_REST_URL_NOT_FOUND = "/profile/restaurants/100004/votes/9";
+    public static final String VOTE3_REST_URL = "/profile/restaurants/100004/votes";
+    public static final String VOTE3_REST_URL_NOT_FOUND = "/profile/restaurants/100008/votes";
     public static final Vote VOTE_1 = new Vote(100014, UserTestData.user, RestaurantTestData.RESTAURANT_3);
     public static final Vote VOTE_2 = new Vote(100015, UserTestData.admin, RestaurantTestData.RESTAURANT_3);
     public static final Vote VOTE_3 = new Vote(100017, UserTestData.user, RestaurantTestData.RESTAURANT_3);
