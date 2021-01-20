@@ -5,6 +5,8 @@ import com.gmail.podkutin.dmitry.votingsystem.repository.RestaurantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -22,6 +24,7 @@ public class RestaurantService {
         this.repository = repository;
     }
 
+    @Cacheable("queryCacheServices")
     public List<Restaurant> getAll(Boolean withMenu) {
         log.info("getAll");
         if (withMenu) {
@@ -39,17 +42,20 @@ public class RestaurantService {
         return checkNotFoundWithEntity(repository.findById(id), message);
     }
 
+    @CacheEvict(value = "queryCacheServices", allEntries = true)
     public Restaurant create(Restaurant restaurant) {
         log.info("create {}", restaurant);
         return repository.save(restaurant);
     }
 
+    @CacheEvict(value = "queryCacheServices", allEntries = true)
     public void update(Restaurant restaurant, int id) {
         Assert.notNull(restaurant, "restaurant must not be null");
         checkNotFound(id == repository.save(restaurant).id(), " " + id);
         log.info("update {} with id={}", restaurant, id);
     }
 
+    @CacheEvict(value = "queryCacheServices", allEntries = true)
     public void delete(int id) {
         log.info("delete {}", id);
         checkNotFoundWithId(repository.delete(id), id);
