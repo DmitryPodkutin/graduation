@@ -15,6 +15,12 @@ Java 8 Stream and Time API Storage in databases HSQLDB, Swagger**
     - If it is before 11:00 we assume that he changed his mind.
     - If it is after 11:00 then it is too late, vote can't be changed
 ------
+#### Starting Project
+```sh
+mvn clean verify org.codehaus.cargo:cargo-maven2-plugin:run
+```
+
+
 #### REST UI Documentation
 The application has Swagger UI.  
 After starting APP you need to go about url : http://localhost:8080/voting-system/  
